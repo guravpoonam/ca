@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 5px;
+    }
+
+    input[type="button"] {
+      width: 100%;
+      height: 64px;
+      font-size: 20px;
+    }
+
+    #result {
+      grid-column: 1 / span 4;
+      height: 50px;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input type="text" id="result" readonly>
+    <input type="button" value="1" class="number">
+    <input type="button" value="2" class="number">
+    <input type="button" value="3" class="number">
+    <input type="button" value="+" class="operator">
+    <input type="button" value="4" class="number">
+    <input type="button" value="5" class="number">
+    <input type="button" value="6" class="number">
+    <input type="button" value="-" class="operator">
+    <input type="button" value="7" class="number">
+    <input type="button" value="8" class="number">
+    <input type="button" value="9" class="number">
+    <input type="button" value="*" class="operator">
+    <input type="button" value="0" class="number">
+    <input type="button" value="/" class="operator">
+    <input type="button" value="C" class="clear">
+    <input type="button" value="=" class="equal">
+  </div>
+
+  <script>
+    const resultField = document.getElementById('result');
+    const numberButtons = document.querySelectorAll('.number');
+    const operatorButtons = document.querySelectorAll('.operator');
+    const clearButton = document.querySelector('.clear');
+    const equalButton = document.querySelector('.equal');
+
+    numberButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        appendToResult(button.value);
+      });
+    });
+
+    operatorButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        appendToResult(button.value);
+      });
+    });
+
+    clearButton.addEventListener('click', () => {
+      clearResult();
+    });
+
+    equalButton.addEventListener('click', () => {
+      calculateResult();
+    });
+
+    function appendToResult(value) {
+      resultField.value += value;
+    }
+
+    function clearResult() {
+      resultField.value = '';
+    }
+
+    function calculateResult() {
+      const expression = resultField.value;
+      const operators = ['+', '-', '*', '/'];
+
+      for (let operator of operators) {
+        if (expression.includes(operator)) {
+          const operands = expression.split(operator);
+          const operand1 = parseFloat(operands[0]);
+          const operand2 = parseFloat(operands[1]);
+
+          let result;
+          switch (operator) {
+            case '+':
+              result = operand1 + operand2;
+              break;
+            case '-':
+              result = operand1 - operand2;
+              break;
+            case '*':
+              result = operand1 * operand2;
+              break;
+            case '/':
+              result = operand1 / operand2;
+              break;
+          }
+
+          resultField.value = result;
+          return;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+    
+
+
+
+
+
